@@ -24,6 +24,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RegistroDiario> registros = new ArrayList<>();
 
+    //Metodo constructor
     public Usuario(){
         this.id = 0;
         this.nombre = "Marito";
@@ -32,6 +33,7 @@ public class Usuario {
         this.password = "password";
     }
 
+    //Metodo constructor
     public Usuario(Integer id, String nombre, Integer edad, String correo, String password) {
         this.id = id;
         this.nombre = nombre;
@@ -61,7 +63,7 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    //-----------------------------------------------------------
+    //-----------------------------------------------------------\\
 
     public Integer getEdad() {
         return edad;
@@ -71,7 +73,7 @@ public class Usuario {
         this.edad = edad;
     }
 
-    //-----------------------------------------------------------
+    //-----------------------------------------------------------\\
 
     public String getCorreo() {
         return correo;
@@ -81,7 +83,7 @@ public class Usuario {
         this.correo = correo;
     }
 
-    //-----------------------------------------------------------
+    //-----------------------------------------------------------\\
 
     public String getPassword() {
         return password;
@@ -91,7 +93,7 @@ public class Usuario {
         this.password = password;
     }
 
-    //-----------------------------------------------------------
+    //-----------------------------------------------------------\\
 
     public List<RegistroDiario> getRegistros() {
         return registros;

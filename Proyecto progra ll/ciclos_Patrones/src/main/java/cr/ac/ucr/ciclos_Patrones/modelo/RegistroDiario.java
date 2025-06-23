@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="resgistroDiario_db")
+@Table(name="tb_resgistroDiario")
 public class RegistroDiario {
 
     @Id
@@ -14,24 +14,36 @@ public class RegistroDiario {
     private Integer id;
     @Column(name="date", nullable = false)
     private LocalDate date;
-    @Column(name="estadoAnimo", nullable = false, length = 50)
+    @Column(name="estadoAnimo", nullable = false)
     private String estadoAnimo;
-    @Column(name="sintomas", nullable = false, length = 50)
-    private String sintomas;
+    @Column(name="sintoma", nullable = false)
+    private String sintoma;
     @Column(name="observaciones", nullable = false)
     private String observaciones;
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    //Metodo constructor con parametros
     public RegistroDiario(Integer id, LocalDate date, String estadoAnimo, String sintomas, String observaciones, Usuario usuario) {
         this.id = id;
         this.date = date;
         this.estadoAnimo = estadoAnimo;
-        this.sintomas = sintomas;
+        this.sintoma = sintomas;
         this.observaciones = observaciones;
         this.usuario = usuario;
     }
+
+    //Metodo constructor sin parametros
+    public RegistroDiario() {
+        this.id = 0;
+        this.date = LocalDate.now(); // Fecha actual
+        this.estadoAnimo = "No especificado";
+        this.sintoma = "Sin síntomas";
+        this.observaciones = "Sin observaciones";
+        this.usuario = new Usuario(); // Asumiendo que Usuario tiene un constructor vacío
+    }
+
 
 //-------------------------------------------------------------------------------------------------------
     //Metodos sets, gets y toString
@@ -67,11 +79,11 @@ public class RegistroDiario {
     //-----------------------------------------------------------\\
 
     public String getSintomas() {
-        return sintomas;
+        return sintoma;
     }
 
-    public void setSintomas(String sintomas) {
-        this.sintomas = sintomas;
+    public void setSintomas(String sintoma) {
+        this.sintoma = sintoma;
     }
 
     //-----------------------------------------------------------\\
@@ -102,7 +114,7 @@ public class RegistroDiario {
                 "id=" + id +
                 ", date=" + date +
                 ", estadoAnimo='" + estadoAnimo + '\'' +
-                ", sintomas='" + sintomas + '\'' +
+                ", sintomas='" + sintoma + '\'' +
                 ", observaciones='" + observaciones + '\'' +
                 ", usuario=" + usuario.getId() +  // o .getNombre()
                 '}';
