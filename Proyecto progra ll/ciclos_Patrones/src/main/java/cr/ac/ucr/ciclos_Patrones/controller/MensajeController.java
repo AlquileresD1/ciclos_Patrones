@@ -93,4 +93,16 @@ public class MensajeController {
         return ResponseEntity.ok(actualizado);
     }
 
+    // GET: Listar todos los mensajes de un chat específico
+    @GetMapping("/porChat/{chatId}")
+    public ResponseEntity<?> listarPorChat(@PathVariable Integer chatId) {
+        List<Mensaje> mensajes = mensajeService.listarPorChat(chatId);
+        if (mensajes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body("No hay mensajes registrados para el chat con ID " + chatId);
+        }
+        return ResponseEntity.ok(mensajes);
+    }
+
+
 }

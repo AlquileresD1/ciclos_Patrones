@@ -7,54 +7,45 @@ import cr.ac.ucr.ciclos_Patrones.repository.IRegistroDiarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RegistroDiarioService {
+public class MensajeService {
 
     @Autowired
-    private IRegistroDiarioRepository registroRepository;
+    private IMensajeRepository mensajeRepository;
 
-    public List<RegistroDiario> listarTodos() {
-        return registroRepository.findAll();
+    public List<Mensaje> listarTodos() {
+        return mensajeRepository.findAll();
     }
 
-    public Optional<RegistroDiario> obtenerPorId(Integer id) {
-        return registroRepository.findById(id);
+    public Optional<Mensaje> obtenerPorId(Integer id) {
+        return mensajeRepository.findById(id);
     }
 
-    public List<RegistroDiario> listarPorUsuario(Integer usuarioId) {
-        return registroRepository.findByUsuarioId(usuarioId);
+    public List<Mensaje> listarPorChat(Integer chatId) {
+        return mensajeRepository.findByChatIdOrderByFechaHoraAsc(chatId);
     }
 
-    public List<RegistroDiario> listarPorFecha(LocalDate fecha) {
-        return registroRepository.findByDate(fecha);
+    public List<Mensaje> buscarPorTexto(String texto) {
+        return mensajeRepository.findByContenidoContainingIgnoreCase(texto);
     }
 
-    public List<RegistroDiario> listarPorRangoFechas(LocalDate inicio, LocalDate fin) {
-        return registroRepository.findByDateBetween(inicio, fin);
+    public List<Mensaje> filtrarPorUsuario(boolean esUsuario) {
+        return mensajeRepository.findByEsUsuario(esUsuario);
     }
 
-    public List<RegistroDiario> buscarPorEstadoAnimo(String estadoAnimo) {
-        return registroRepository.findByEstadoAnimoContainingIgnoreCase(estadoAnimo);
+    public List<Mensaje> filtrarPorRangoFecha(LocalDateTime desde, LocalDateTime hasta) {
+        return mensajeRepository.findByFechaHoraBetween(desde, hasta);
     }
 
-    public List<RegistroDiario> buscarPorSintoma(String sintoma) {
-        return registroRepository.findBySintomaContainingIgnoreCase(sintoma);
-    }
-
-    public RegistroDiario guardar(RegistroDiario registro) {
-        return registroRepository.save(registro);
+    public Mensaje guardar(Mensaje mensaje) {
+        return mensajeRepository.save(mensaje);
     }
 
     public void eliminarPorId(Integer id) {
-        registroRepository.deleteById(id);
-    }
-
-    // ✅ Validación de existencia de registro por usuario y fecha
-    public boolean yaExisteRegistroEnFecha(Integer usuarioId, LocalDate fecha) {
-        return !registroRepository.findByUsuarioIdAndDate(usuarioId, fecha).isEmpty();
+        mensajeRepository.deleteById(id);
     }
 }
